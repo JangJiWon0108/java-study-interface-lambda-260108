@@ -83,7 +83,7 @@ public class SortUsingListSortLambdaServiceImpl implements SortService {
                 if (currentTarget > nextTarget) {
                     return -1;
                 } else if (currentTarget < nextTarget) {
-                    return 0;
+                    return -1;
                 } else {
                     return 0;
                 }

@@ -24,7 +24,9 @@ public class SortController {
     // sortUsingListSortComparator
     // sortUsingListSortLambda
 
-    public SortController (@Qualifier("sortUsingListSortLambda") SortService sortService) {
+    // SortController 생성 시 수행
+    // 특정 정렬 서비스 구현체를 주입
+    public SortController (@Qualifier("sortUsingFor") SortService sortService) {
         this.sortService = sortService;
     }
 
