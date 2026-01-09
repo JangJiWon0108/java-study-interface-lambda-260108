@@ -16,12 +16,7 @@ import java.util.Map;
 public class SortUsingListSortLambdaServiceImpl implements SortService {
 
     private final RandomListUtil randomListUtil;
-    /**
-     * ListSortLambda 이용한 정렬
-     * @param sortTarget (KEY or VALUE)
-     * @param sortOrder (ASC or DESC)
-     * @return
-     */
+
     public List<Map<Integer, Integer>> execSort(String sortTarget, String sortOrder) {
         try {
             log.info("RUN sortUsingListSortLambda");
@@ -32,26 +27,42 @@ public class SortUsingListSortLambdaServiceImpl implements SortService {
         }
     }
 
+    /**
+     * List의 sort 메서드(람다 이용)를 이용한 정렬
+     * @param sortTarget (KEY or VALUE)
+     * @param sortOrder (ASC or DESC)
+     * @return
+     */
     public List<Map<Integer, Integer>> sortUsingListSortLambda(String sortTarget, String sortOrder) {
 
-        List<Map<Integer, Integer>> resultList = randomListUtil.generateRandomList(1, 100, 100);
+        // 랜덤 값으로 구성된 List<Map<Integer, Integer>> 생성 (size : 100)
+        List<Map<Integer,Integer>> resultList = randomListUtil.generateRandomList(1, 100, 100);
 
+        // 정렬 기준을 가져오는 Comparator 생성
         Comparator<Map<Integer, Integer>> comp = getComparator(sortTarget, sortOrder);
 
+        // 리스트를 생성된 Comparator로 정렬
         resultList.sort(comp);
 
         return resultList;
     }
 
+    /**
+     * Comparator 생성 메서드
+     * @param sortTrget
+     * @param sortOrder
+     * @return
+     */
     public static Comparator<Map<Integer, Integer>> getComparator (String sortTrget, String sortOrder) {
 
-        // 람다표현식
+        // Comapartor<> 를 람다 표현식을 활용해 구현하고 리턴
         return (Map<Integer, Integer> currentMap, Map<Integer, Integer> nextMap) -> {
 
             Integer currentTarget;
             Integer nextTarget;
 
-                if (sortTrget.equals("KEY")) {
+            // sortTarget 기준에 따라 key 또는 value를 선택
+            if (sortTrget.equals("KEY")) {
                 currentTarget = currentMap.entrySet().iterator().next().getKey();
                 nextTarget = nextMap.entrySet().iterator().next().getKey();
             } else {
@@ -59,7 +70,8 @@ public class SortUsingListSortLambdaServiceImpl implements SortService {
                 nextTarget = nextMap.entrySet().iterator().next().getValue();
             }
 
-                if (sortOrder.equals("ASC")) {
+            // sortOrder 에 따라 오름차순, 내림차순 정렬
+            if (sortOrder.equals("ASC")) {
                 if (currentTarget > nextTarget) {
                     return 1;
                 } else if (currentTarget < nextTarget) {
